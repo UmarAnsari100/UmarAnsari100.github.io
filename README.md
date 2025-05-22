@@ -70,7 +70,7 @@ It was built with a focus on:
 
 If you like what you see and want to collaborate or have any questions, feel free to reach out!
 
-* 📧 Email: [you@example.com](mailto:you@example.com)
+* 📧 Email: [mumaransari1607@gmail.com](mailto:mumaransari1607@gmail.com)
 * 🌐 Website: [your-portfolio-link.com](https://your-portfolio-link.com)
 * 🔗 LinkedIn: [linkedin.com/in/yourprofile](https://linkedin.com/in/yourprofile)
 
