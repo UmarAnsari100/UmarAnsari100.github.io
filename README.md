@@ -72,7 +72,7 @@ If you like what you see and want to collaborate or have any questions, feel fre
 
 * 📧 Email: [mumaransari1607@gmail.com](mailto:mumaransari1607@gmail.com)
 * 🌐 Website: [your-portfolio-link.com](https://your-portfolio-link.com)
-* 🔗 LinkedIn: [linkedin.com/in/yourprofile](https://linkedin.com/in/yourprofile)
+* 🔗 LinkedIn: [linkedin.com/in/muhammad-umar-ansari](www.linkedin.com/in/muhammad-umar-ansari-26a456355)
 
 ---
 
