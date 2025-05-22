@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Umar`s Portfolio</title>
+    <link rel="stylesheet" href="styles.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" />
+    <!-- Three.js script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/quicksettings@3.0.1/quicksettings_black.min.css">
+     <!-- Add these Firebase scripts -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+    <link rel="icon" type="image/png" href="personal-data_1809793.png" />  
+  </head>
+  <body>
+    <!-- Star Texture Canvas -->
+    <canvas id="view"></canvas>
+    <aside>
+      <img id="star-texture" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/106114/stars-02.png?v=1" style="display:none;">
+    </aside>
+    <div id="quick-settings" style="display:none;"></div>
+
+    <!-- Move to up button -->
+    <div class="scroll-button">
+      <a href="#"><i class="fas fa-arrow-up"></i></a>
+    </div>
+
+    <!-- Navigation Menu -->
+    <nav>
+      <div class="navbar">
+        <div class="logo"><a href="#">My Portfolio.</a></div>
+        <ul class="menu">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <div class="cancel-btn"><i class="fas fa-times"></i></div>
+        </ul>
+        <div class="media-icons">
+          <a href="https://www.facebook.com/share/1C65hAUAZ6/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://www.linkedin.com/in/muhammad-umar-ansari-26a456355?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank"><i class="fab fa-linkedin"></i></a>
+          <a href="https://www.instagram.com/u_m_a_r_i_302?igsh=dWt3b3p5ZmsxcWQ3" target="_blank"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+      <div class="menu-btn"><i class="fas fa-bars"></i></div>
+    </nav>
+
+    <!-- Home Section Start -->
+    <section class="home" id="home" style="position:relative; min-height:100vh; display:flex; align-items:center; justify-content:center; overflow:hidden;">
+      <!-- 3D Background Canvas (Three.js) -->
+      <div id="home-3d-bg" style="position:absolute; top:0; left:0; width:100vw; height:100vh; z-index:0;"></div>
+      <div class="home-content" style="position:relative; z-index:2; display:flex; align-items:center; justify-content:center; width:100%; max-width:1200px; margin:auto;">
+      <div class="text-content" style="flex:1; color:#fff; padding:2rem;">
+        <div class="text-one" style="font-size:1.5rem; letter-spacing:2px; color:#aaa;">Hello, I'm</div>
+        <div class="text-two" style="font-size:3rem; font-weight:300; margin:0.5rem 0;">Muhammad Umar</div>
+        <div class="text-three" style="font-size:2rem; font-weight:500; color:#00c3ff; margin-bottom:0.5rem;">Frontend Developer</div>
+        <div class="text-four" style="font-size:1.2rem; color:#ddd; margin-bottom:1.5rem;">Crafting modern, interactive, and responsive web experiences.</div>
+        <div class="button">
+          <a href="#contact" class="contact-btn" style="padding:0.75rem 2rem; background:#00c3ff; color:#fff; border-radius:30px; font-weight:600; text-decoration:none; box-shadow:0 4px 24px rgba(0,195,255,0.2); transition:background 0.3s, color 0.3s;">
+            Contact Me
+          </a>
+        </div>
+        <style>
+          .contact-btn:hover {
+            background: #fff !important;
+            color: #000 !important;
+          }
+        </style>
+      </div>
+      <div class="image-container" style="flex:1; display:flex; align-items:center; justify-content:center;">
+        <div style="background:rgba(255,255,255,0.05); border-radius:50%; box-shadow:0 8px 32px rgba(0,0,0,0.2); padding:1.5rem;">
+        <img src="profile.jpeg" alt="Profile" class="profile-img" style="width:220px; height:220px; border-radius:50%; object-fit:cover; border:6px solid #00c3ff; box-shadow:0 4px 32px rgba(0,195,255,0.15);">
+        </div>
+      </div>
+      </div>
+    </section>
+    <!-- Home Section End -->
+
+    <!-- 3D Background Script (Three.js) -->
+    <script>
+      // Animated 3D particles background for home section, moves with cursor
+      (function() {
+      const container = document.getElementById('home-3d-bg');
+      if (!container) return;
+      // Scene setup
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+      camera.position.z = 60;
+
+      const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+      renderer.setClearColor(0x000000, 0); // transparent
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      container.appendChild(renderer.domElement);
+
+      // Responsive resize
+      window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      });
+
+      // Create floating particles
+      const particles = [];
+      const particleCount = 120;
+      const geometry = new THREE.SphereGeometry(0.7, 16, 16);
+      const material = new THREE.MeshStandardMaterial({ color: 0x00c3ff, transparent: true, opacity: 0.7, roughness: 0.5, metalness: 0.7 });
+      for (let i = 0; i < particleCount; i++) {
+        const mesh = new THREE.Mesh(geometry, material.clone());
+        mesh.position.set(
+        (Math.random() - 0.5) * 80,
+        (Math.random() - 0.5) * 50,
+        (Math.random() - 0.5) * 60
+        );
+        mesh.material.opacity = 0.5 + Math.random() * 0.5;
+        mesh.material.color.setHSL(0.55 + Math.random()*0.1, 1, 0.5);
+        scene.add(mesh);
+        particles.push(mesh);
+      }
+
+      // Lighting
+      const ambient = new THREE.AmbientLight(0xffffff, 0.7);
+      scene.add(ambient);
+      const point = new THREE.PointLight(0x00c3ff, 1.2, 200);
+      point.position.set(0, 0, 60);
+      scene.add(point);
+
+      // Mouse movement effect
+      let targetRotationX = 0, targetRotationY = 0;
+      let currentRotationX = 0, currentRotationY = 0;
+
+      function onPointerMove(e) {
+        let x, y;
+        if (e.touches && e.touches.length) {
+        x = e.touches[0].clientX;
+        y = e.touches[0].clientY;
+        } else {
+        x = e.clientX;
+        y = e.clientY;
+        }
+        // Normalize to [-1, 1]
+        targetRotationY = ((x / window.innerWidth) - 0.5) * 2 * 0.4; // max ~0.4 rad
+        targetRotationX = ((y / window.innerHeight) - 0.5) * 2 * 0.2; // max ~0.2 rad
+      }
+      window.addEventListener('mousemove', onPointerMove);
+      window.addEventListener('touchmove', onPointerMove);
+
+      // Animation loop
+      function animate() {
+        requestAnimationFrame(animate);
+        // Smoothly interpolate rotation
+        currentRotationX += (targetRotationX - currentRotationX) * 0.07;
+        currentRotationY += (targetRotationY - currentRotationY) * 0.07;
+        scene.rotation.x = currentRotationX;
+        scene.rotation.y = currentRotationY;
+
+        particles.forEach((p, i) => {
+        p.position.y += Math.sin(Date.now() * 0.0005 + i) * 0.01;
+        p.position.x += Math.cos(Date.now() * 0.0003 + i) * 0.01;
+        p.rotation.x += 0.002;
+        p.rotation.y += 0.002;
+        });
+        renderer.render(scene, camera);
+      }
+      animate();
+      })();
+    </script>
+
+    <!-- About Section Start -->
+    <section class="about" id="about">
+      <canvas id="about-stars-canvas"></canvas>
+      <img id="star-texture" src="img1.png" style="display:none;">
+      <div id="quick-settings" style="position: absolute; z-index: 2;"></div>
+
+      <div class="content">
+        <div class="title"><span>About Me</span></div>
+        <div class="about-details">
+          <div class="left">
+            <img src="profile.jpeg" alt="" />
+          </div>
+          <div class="right">
+            <div class="topic">Designing Is My Passion</div>
+            <p>
+                I am a dedicated and passionate Frontend Developer with a strong focus on creating modern, responsive, and user-friendly web designs. With a keen eye for detail and a commitment to excellence, I specialize in crafting visually appealing and functional websites that deliver exceptional user experiences. My expertise lies in leveraging the latest web technologies to bring innovative ideas to life, ensuring seamless performance and scalability. I thrive on solving complex challenges and continuously enhancing my skills to stay ahead in the ever-evolving field of web development.
+            </p>
+            <div class="button">
+              <a href="umar cv.pdf" class="button" download>Download CV</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- My Skill Section Start -->
+    <section class="skills" id="skills">
+      <div class="content">
+        <div class="title"><span>My Skills</span></div>
+        <div class="skills-details">
+          <div class="text">
+            <div class="topic" style="color: black; text-decoration: underline;">Skills Reflects Our Knowledge</div>
+            <p>My skills are a reflection of my dedication to continuous learning and professional growth. With a strong foundation in web development and design, I strive to deliver innovative solutions that meet client needs and exceed expectations. My expertise spans across various technologies, enabling me to create seamless and engaging user experiences.</p>
+            <div class="experience">
+              <div class="num">10</div>
+              <div class="exp">
+                Years Of <br />
+                Experience
+              </div>
+            </div>
+          </div>
+          <div class="boxes">
+            <div class="box">
+              <div class="topic">HTML</div>
+              <div class="per">90%</div>
+            </div>
+            <div class="box">
+              <div class="topic">CSS</div>
+              <div class="per">80%</div>
+            </div>
+            <div class="box">
+              <div class="topic">JavScript</div>
+              <div class="per">70%</div>
+            </div>
+            <div class="box">
+              <div class="topic">REACT</div>
+              <div class="per">60%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- My Services Section Start -->
+    <section class="services" id="services">
+      <div class="content">
+        <div class="title"><span>My Services</span></div>
+        <div class="boxes">
+          <div class="box">
+            <div class="icon">
+              <i class="fas fa-desktop"></i>
+            </div>
+            <a href="projects\web-development.html" class="box-link" target="_blank">
+            <div class="topic">Web Devlopment</div>
+            <p style="color: #fff;">Providing cutting-edge web development solutions tailored to meet your business needs, ensuring seamless functionality and exceptional user experience.</p>
+          </div>
+          </a>
+          <div class="box">
+            <div class="icon">
+              <i class="fas fa-paint-brush"></i>
+            </div>
+            <a href="projects\graphic-design.html" class="box-link" target="_blank">
+            <div class="topic">Graphic Design</div>
+            <p style="color: #fff;">Offering creative and visually compelling graphic design solutions to effectively communicate your brand's message and captivate your audience.</p>
+          </div>
+          </a>
+          <div class="box">
+            <div class="icon">
+              <i class="fas fa-chart-line"></i>
+            </div>
+            <a href="projects\digital-marketing.html" class="box-link" target="_blank">
+            <div class="topic">Digital Marketing</div>
+            <p style="color: #fff;">Delivering data-driven digital marketing strategies to enhance brand visibility, drive engagement, and achieve measurable business growth.</p>
+          </div>
+          </a>
+          <div class="box">
+            <div class="icon">
+              <i class="fab fa-android"></i>
+            </div>
+            <a href="projects\icon-design.html" class="box-link" target="_blank">
+            <div class="topic">Icon Design</div>
+            <p style="color: #fff;">Designing unique and visually appealing icons that effectively represent your brand and enhance user experience.</p>
+          </div>
+          </a>
+            <div class="box">
+            <div class="icon">
+              <i class="fas fa-database"></i>
+            </div>
+            <a href="projects\database-management.html" class="box-link" target="_blank">
+            <div class="topic">Database Management</div>
+            <p style="color: #fff;">Offering robust database management services, including design, optimization, and maintenance to ensure secure, efficient, and scalable data solutions for your business.</p>
+            </div>
+          </a>
+          <div class="box">
+            <div class="icon">
+              <i class="fas fa-tablet-alt"></i>
+            </div>
+            <a href="projects\app-development.html" class="box-link" target="_blank">
+            <div class="topic">Apps Devlopment</div>
+            <p style="color: #fff;">Developing innovative and user-centric applications that combine functionality with intuitive design, ensuring seamless user experiences and robust performance.</p>
+          </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Me section Start -->
+    <section class="contact" id="contact">
+      <div class="content">
+        <div class="title" style="color: black;"><span>Contact Me</span></div>
+        <div class="text">
+          <div class="topic" style="color: black;">Have Any Project?</div>
+            <p>If you have a project in mind or need assistance with web development, design, or digital solutions, feel free to reach out. I am committed to delivering high-quality results tailored to your specific needs and goals. Let's collaborate to bring your vision to life.</p>
+          <div class="button">
+            <button>Let's Chat</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Form Section Start -->
+    <section class="contact-form">
+      <div class="content">
+        <div class="title"><span>Contact Form</span></div>
+        <form action="#">
+          <div class="user-details">
+            <div class="input-box">
+              <span class="details">Name</span>
+              <input type="text" placeholder="Enter your name" required />
+            </div>
+            <div class="input-box">
+              <span class="details">Email</span>
+              <input type="text" placeholder="Enter your email" required />
+            </div>
+            <div class="input-box">
+              <span class="details">Message</span>
+              <textarea placeholder="Type your message" required></textarea>
+            </div>
+          </div>
+          <div class="button">
+            <input type="submit" value="Send Message" />
+          </div>
+        </form>
+      </div>
+      <canvas id="view"></canvas>
+      <aside>
+        <img id="star-texture" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/106114/stars-02.png?v=1">
+      </aside>
+      <div id="quick-settings"></div>
+    </section>
+
+    <!-- Footer Section Start -->
+    <footer>
+      <div class="text">
+        <span>Created By <a href="#">M. Umar</a> |  2025 All Rights Reserved</span>
+      </div>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+    <script src="firebase-config.js"></script>
+    <script src="content-manager.js"></script>
+    <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/quicksettings/3.0.2/quicksettings.min.js"></script>
+
+    <!-- Star Texture Animation Script -->
+    <script>
+      "use strict";
+      console.clear();
+      const log = console.log.bind(console);
+      const TAU = Math.PI * 2;
+
+      class Particle {
+        constructor(texture, frame) {
+          this.texture = texture;
+          this.frame = frame;
+          this.alive = false;
+          this.width = frame.width;
+          this.height = frame.height;
+          this.originX = frame.width / 2;
+          this.originY = frame.height / 2;
+        }
+        init(x = 0, y = 0) {
+          const angle = random(TAU);
+          const force = random(2, 6);
+          this.x = x;
+          this.y = y;
+          this.alpha = 1;
+          this.alive = true;
+          this.theta = angle;
+          this.vx = Math.sin(angle) * force;
+          this.vy = Math.cos(angle) * force;
+          this.rotation = Math.atan2(this.vy, this.vx);
+          this.drag = random(0.82, 0.97);
+          this.scale = random(0.1, 1);
+          this.wander = random(0.5, 1.0);
+          this.matrix = { a: 1, b: 0, c: 0, d: 1, tx: 0, ty: 0 };
+          return this;
+        }
+        update() {
+          const matrix = this.matrix;
+          this.x += this.vx;
+          this.y += this.vy;
+          this.vx *= this.drag;
+          this.vy *= this.drag;
+          this.theta += random(-0.5, 0.5) * this.wander;
+          this.vx += Math.sin(this.theta) * 0.1;
+          this.vy += Math.cos(this.theta) * 0.1;
+          this.rotation = Math.atan2(this.vy, this.vx);
+          this.alpha *= 0.98;
+          this.scale *= 0.985;
+          this.alive = this.scale > 0.06 && this.alpha > 0.06;
+          const cos = Math.cos(this.rotation) * this.scale;
+          const sin = Math.sin(this.rotation) * this.scale;
+          matrix.a = cos;
+          matrix.b = sin;
+          matrix.c = -sin;
+          matrix.d = cos;
+          matrix.tx = this.x - ((this.originX * matrix.a) + (this.originY * matrix.c));
+          matrix.ty = this.y - ((this.originX * matrix.b) + (this.originY * matrix.d));
+          return this;
+        }
+        draw(context) {
+          const m = this.matrix;
+          const f = this.frame;
+          context.globalAlpha = this.alpha;
+          context.setTransform(m.a, m.b, m.c, m.d, m.tx, m.ty);
+          context.drawImage(this.texture, f.x, f.y, f.width, f.height, 0, 0, this.width, this.height);
+          return this;
+        }
+      }
+
+      class App {
+        constructor(options) {
+          this.pool = [];
+          this.particles = [];
+          this.pointer = { x: -9999, y: -9999 };
+          this.buffer = document.createElement("canvas");
+          this.bufferContext = this.buffer.getContext("2d");
+          this.supportsFilters = (typeof this.bufferContext.filter !== "undefined");
+          this.pointerMove = event => {
+            event.preventDefault();
+            const pointer = event.targetTouches ? event.targetTouches[0] : event;
+            this.pointer.x = pointer.clientX;
+            this.pointer.y = pointer.clientY;
+            for (let i = 0; i < random(2, 7); i++) {
+              this.spawn(this.pointer.x, this.pointer.y);
+            }
+          };
+          this.resize = () => {
+            this.width = this.buffer.width = this.view.width = window.innerWidth;
+            this.height = this.buffer.height = this.view.height = window.innerHeight;
+          };
+          this.render = () => {
+            const context = this.context;
+            const particles = this.particles;
+            const bufferContext = this.bufferContext;
+            context.fillStyle = this.backgroundColor;
+            context.fillRect(0, 0, this.width, this.height);
+            bufferContext.globalAlpha = 1;
+            bufferContext.setTransform(1, 0, 0, 1, 0, 0);
+            bufferContext.clearRect(0, 0, this.width, this.height);
+            bufferContext.globalCompositeOperation = this.blendMode;
+            for (let i = 0; i < particles.length; i++) {
+              const particle = particles[i];
+              if (particle.alive) {
+                particle.update();
+              } else {
+                this.pool.push(particle);
+                removeItems(particles, i, 1);
+              }
+            }
+            for (let particle of particles) {
+              particle.draw(bufferContext);
+            }
+            if (this.supportsFilters) {
+              if (this.useBlurFilter) {
+                context.filter = `blur(${this.filterBlur}px)`;
+              }
+              context.drawImage(this.buffer, 0, 0);
+              if (this.useContrastFilter) {
+                context.filter = `drop-shadow(4px 4px 4px rgba(0,0,0,1)) contrast(${this.filterContrast}%)`;
+              }
+            }
+            context.drawImage(this.buffer, 0, 0);
+            context.filter = "none";
+            requestAnimationFrame(this.render);
+          };
+          Object.assign(this, options);
+          this.context = this.view.getContext("2d", { alpha: false });
+        }
+        spawn(x, y) {
+          let particle;
+          if (this.particles.length > this.maxParticles) {
+            particle = this.particles.shift();
+          } else if (this.pool.length) {
+            particle = this.pool.pop();
+          } else {
+            particle = new Particle(this.texture, sample(this.frames));
+          }
+          particle.init(x, y);
+          this.particles.push(particle);
+          return this;
+        }
+        start() {
+          this.resize();
+          this.render();
+          if (window.PointerEvent) {
+            window.addEventListener("pointermove", this.pointerMove);
+          } else {
+            window.addEventListener("mousemove", this.pointerMove);
+            window.addEventListener("touchmove", this.pointerMove);
+          }
+          window.addEventListener("resize", this.resize);
+          requestAnimationFrame(this.render);
+          return this;
+        }
+      }
+
+      function createFrames(numFrames, width, height) {
+        const frames = [];
+        for (let i = 0; i < numFrames; i++) {
+          frames.push({
+            x: width * i,
+            y: 0,
+            width: width,
+            height: height
+          });
+        }
+        return frames;
+      }
+
+      function removeItems(array, startIndex, removeCount) {
+        const length = array.length;
+        if (startIndex >= length || removeCount === 0) return;
+        removeCount = (startIndex + removeCount > length ? length - startIndex : removeCount);
+        const len = length - removeCount;
+        for (let i = startIndex; i < len; ++i) {
+          array[i] = array[i + removeCount];
+        }
+        array.length = len;
+      }
+
+      function random(min, max) {
+        if (max == null) {
+          max = min;
+          min = 0;
+        }
+        if (min > max) [min, max] = [max, min];
+        return min + (max - min) * Math.random();
+      }
+
+      function sample(array) {
+        return array[(Math.random() * array.length) | 0];
+      }
+
+      const app = new App({
+        view: document.querySelector("#view"),
+        texture: document.querySelector("#star-texture"),
+        frames: createFrames(5, 80, 80),
+        maxParticles: 2000,
+        backgroundColor: "#111111",
+        blendMode: "lighter",
+        filterBlur: 50,
+        filterContrast: 300,
+        useBlurFilter: true,
+        useContrastFilter: true
+      });
+
+      window.addEventListener("load", () => app.start());
+    </script>
+
+
+    </script>
+      <!-- Other HTML content -->
+
+  <!-- JavaScript Files -->
+  <!-- Add these right before the closing body tag -->
+  <script src="firebase-config.js"></script>
+  <script src="content-manager.js"></script>
+  <script src="script.js"></script>
+  <script src="https://cdn.jsdelivr.net/quicksettings/3.0.2/quicksettings.min.js"></script>
+
+</script>
+
+</body>
+</html>
