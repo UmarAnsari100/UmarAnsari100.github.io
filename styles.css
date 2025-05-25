@@ -2089,8 +2089,8 @@ footer .text span a:hover {
   }
   /* Make the image in the about section smaller */
   .about-img {
-    width: 70px;
-    height: 70px;
+    width: 50px;
+    height: 50px;
   }
 }
 
