@@ -15,7 +15,7 @@
 
 body {
   background: #111;
-  touch-action: none;
+/*   touch-action: none; */
   margin: 0;
 }
 
