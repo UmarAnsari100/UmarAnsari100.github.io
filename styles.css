@@ -2254,3 +2254,40 @@ footer .text span a:hover {
     font-size: 12px;
   }
 }
+/* Responsive About Section: Heading above image and text on mobile */
+@media (max-width: 900px) {
+  .about .about-details {
+    flex-direction: column-reverse;
+    align-items: center;
+    text-align: center;
+  }
+  .about .about-details .left {
+    width: 100%;
+    margin-bottom: 24px;
+  }
+  .about .about-details .right {
+    width: 100%;
+    margin: 0 0 24px 0;
+  }
+  .about .left img {
+    position: static;
+    top: 0;
+    margin: 0 auto;
+    display: block;
+    height: 180px;
+    width: 180px;
+  }
+  .about .title {
+    margin-bottom: 24px;
+    margin-top: 0;
+    justify-content: center;
+    text-align: center;
+  }
+  .about .title span {
+    font-size: 2rem;
+    color: #4070f4;
+    padding: 6px 18px;
+    border-radius: 8px;
+    display: inline-block;
+  }
+}
