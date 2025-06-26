@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Icon Design Projects</title>
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+ <style>
+:root {
+  --primary: #4b32c3;
+  --secondary: #7c5fff;
+  --accent: #e8eafd;
+  --bg: #f4f6fb;
+  --card-bg: #ffffff;
+  --text-main: #23213a;
+  --text-secondary: #6b6b8d;
+  --shadow: 0 8px 32px rgba(75, 50, 195, 0.10);
+}
+
+body {
+  background: linear-gradient(135deg, var(--bg) 60%, var(--accent) 100%);
+  font-family: 'Segoe UI', 'Poppins', Arial, sans-serif;
+  margin: 0;
+  color: var(--text-main);
+  min-height: 100vh;
+}
+
+.projects-section {
+  padding: 70px 20px 60px;
+  background: transparent;
+}
+
+.projects-section .content {
+  max-width: 1200px;
+  margin: auto;
+  text-align: center;
+}
+
+.projects-section h1 {
+  font-size: 2.6em;
+  color: var(--primary);
+  margin-bottom: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 12px var(--accent);
+}
+
+.projects-section p {
+  font-size: 1.15em;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-bottom: 44px;
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 32px;
+  padding: 20px 0;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.project-card {
+  width: 100%;
+  max-width: 320px;
+  margin: auto;
+  background: linear-gradient(120deg, var(--card-bg) 80%, var(--accent) 100%);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+  padding: 28px 22px 24px 22px;
+  transition: transform 0.25s, box-shadow 0.25s;
+  position: relative;
+  overflow: hidden;
+  border: 2px solid var(--accent);
+}
+
+.project-card::before {
+  content: "";
+  position: absolute;
+  top: -60px;
+  right: -60px;
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(circle, var(--secondary) 60%, transparent 100%);
+  opacity: 0.13;
+  z-index: 0;
+}
+
+.project-card:hover {
+  transform: translateY(-8px) scale(1.018);
+  box-shadow: 0 16px 40px rgba(75, 50, 195, 0.16);
+  border-color: var(--primary);
+}
+
+.project-card img {
+  width: 100%;
+  max-width: 340px;
+  border-radius: 12px;
+  margin-bottom: 18px;
+  background: var(--accent);
+  border: 2px solid var(--accent);
+  box-shadow: 0 4px 24px rgba(75, 50, 195, 0.10);
+  object-fit: cover;
+  aspect-ratio: 16 / 9;
+}
+
+.project-card h3 {
+  font-size: 1.25em;
+  font-weight: 600;
+  color: var(--primary);
+  margin: 10px 0 12px;
+  letter-spacing: 0.5px;
+  position: relative;
+  z-index: 1;
+}
+
+.project-card p {
+  font-size: 1.05em;
+  color: var(--text-secondary);
+  margin-bottom: 18px;
+  position: relative;
+  z-index: 1;
+}
+
+.project-card .actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.project-card button {
+  font-size: 1em;
+  font-weight: 500;
+  padding: 8px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+  box-shadow: 0 2px 8px rgba(75, 50, 195, 0.06);
+  background: var(--primary);
+  color: #ffffff;
+}
+
+.project-card button.secondary {
+  background: var(--accent);
+  color: var(--primary);
+  box-shadow: 0 2px 8px rgba(75, 50, 195, 0.04);
+}
+
+.project-card button:hover,
+.project-card button:focus {
+  background: var(--secondary);
+  color: #ffffff;
+}
+
+.project-card button.secondary:hover,
+.project-card button.secondary:focus {
+  background: var(--primary);
+  color: #ffffff;
+}
+
+/* Responsive Design */
+@media (max-width: 900px) {
+  .projects-section .content {
+    max-width: 98vw;
+  }
+
+  .projects-grid {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+}
+
+@media (max-width: 700px) {
+  .projects-section h1 {
+    font-size: 1.7em;
+  }
+
+  .projects-section p {
+    font-size: 1em;
+  }
+
+  .project-card {
+    padding: 16px 8px 14px;
+  }
+
+  .project-card img {
+    max-width: 100%;
+    aspect-ratio: 16 / 10;
+  }
+}
+</style>
+</head>
+<body>
+  <section class="projects-section">
+    <div class="content">
+      <h1>Icon Design Projects</h1>
+      <p>Some of my favorite icon designs for different uses.</p>
+
+      <div class="projects-grid">
+        <div class="project-card">
+          <img src="images/app-icons.avif" alt="Mobile App Icon Set">
+          <h3>Mobile App Icon Set</h3>
+          <p>App icons made for clear display on phones and tablets.</p>
+          <div class="actions">
+            <button>
+              <i class="fas fa-code"></i> Source
+            </button>
+            <button class="secondary">
+              <span style="font-size:1.1em;">👁️</span> Preview
+            </button>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <img src="images/business-icons.avif" alt="Business Icon Pack">
+          <h3>Business Icon Pack</h3>
+          <p>Icons for business apps like finance and chat. SVG format for easy editing.</p>
+          <div class="actions">
+            <button>
+              <i class="fas fa-code"></i> Source
+            </button>
+            <button class="secondary">
+              <span style="font-size:1.1em;">👁️</span> Preview
+            </button>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <img src="images/social-icons.avif" alt="Social Media Icons">
+          <h3>Social Media Icons</h3>
+          <p>Simple icons for all major social platforms. Works on light and dark backgrounds.</p>
+          <div class="actions">
+            <button>
+              <i class="fas fa-code"></i> Source
+            </button>
+            <button class="secondary">
+              <span style="font-size:1.1em;">👁️</span> Preview
+            </button>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <img src="images/line-icons.avif" alt="Line Icon Collection">
+          <h3>Line Icon Collection</h3>
+          <p>Line icons for dashboards and UI kits. All icons have the same stroke width.</p>
+          <div class="actions">
+            <button>
+              <i class="fas fa-code"></i> Source
+            </button>
+            <button class="secondary">
+              <span style="font-size:1.1em;">👁️</span> Preview
+            </button>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <img src="images/flat-icons.avif" alt="Flat Color Icons">
+          <h3>Flat Color Icons</h3>
+          <p>Colorful flat icons for web and mobile. Easy to spot in any UI.</p>
+          <div class="actions">
+            <button>
+              <i class="fas fa-code"></i> Source
+            </button>
+            <button class="secondary">
+              <span style="font-size:1.1em;">👁️</span> Preview
+            </button>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <img src="images/animated-icons.avif" alt="Animated Icon Set">
+          <h3>Animated Icon Set</h3>
+          <p>Animated SVG icons for websites and apps. Each icon has smooth motion.</p>
+          <div class="actions">
+            <button>
+              <i class="fas fa-code"></i> Source
+            </button>
+            <button class="secondary">
+              <span style="font-size:1.1em;">👁️</span> Preview
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>
